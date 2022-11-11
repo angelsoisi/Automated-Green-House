@@ -1,0 +1,150 @@
+#include <LiquidCrystal.h>
+LiquidCrystal lcd(12,11,8,7,6,5);
+float sensor0=A0;
+float temperatura;
+float humedad=A1;
+float sensor;
+int riego=10;
+
+int foco=4;
+int motor=13;
+
+
+void setup()
+{
+  Serial.begin(9600);
+  lcd.begin(16,2);
+  pinMode(sensor0,INPUT);
+  pinMode(12, OUTPUT);
+  pinMode(13,OUTPUT); 
+  pinMode(4,OUTPUT);
+  pinMode(humedad,INPUT);
+  pinMode(riego,OUTPUT);
+  
+  lcd.setCursor(2,0);
+  lcd.print("Angel Ramirez");
+  delay(1000);
+  lcd.clear();
+  lcd.setCursor(4,0);
+  lcd.print("Girasol");
+  delay(1000);
+  lcd.clear();
+  lcd.setCursor(1,0);
+  lcd.print("30-25 grados C");
+  delay(1000);
+  lcd.clear();
+  lcd.setCursor(1,0),
+  lcd.print("29-30% humedad");
+  delay(1000);
+  lcd.clear();
+}
+
+ 
+void loop()
+{
+  temperatura=analogRead(sensor0);
+  temperatura=((temperatura*5000)/1024)/10;
+  Serial.println(temperatura);
+  lcd.setCursor(0,1);
+  if 
+    (temperatura>30)
+    {
+     
+    digitalWrite(motor,HIGH);
+    lcd.setCursor(0,1);
+    lcd.print("temperatura alta");
+    delay(1000);
+    lcd.clear();
+    lcd.setCursor(0,0);
+    lcd.print("Ventilador");
+    lcd.setCursor(0,1);
+    lcd.print("Activado");
+    delay(1000);
+    lcd.clear();
+  }
+   if     (temperatura<25)
+     {
+     digitalWrite(motor,LOW);
+      digitalWrite(foco,HIGH);
+    lcd.setCursor(0,1);
+    lcd.print("temperatura baja");
+    delay(1000);
+      lcd.clear();
+    lcd.setCursor(0,0);
+    lcd.print("Foco");
+    lcd.setCursor(0,1);
+    lcd.print("Activado");
+    delay(1000);
+    lcd.clear();  
+     
+   }
+  
+ if (temperatura>25 && temperatura<30)
+   {
+   digitalWrite(motor,LOW);
+   digitalWrite(foco,LOW);
+   lcd.clear();
+   lcd.setCursor(6,0);
+  lcd.print(temperatura);
+   lcd.setCursor(3,1);
+   lcd.print("condiciones");
+   delay(1000);
+   lcd.clear();
+   lcd.setCursor(6,0);
+  lcd.print(temperatura);
+   lcd.setCursor(5,1);
+   lcd.print("optimas");
+   delay(1000);
+   lcd.clear();   
+  
+ }
+   
+   lcd.setCursor(6,0);
+  lcd.print(temperatura);
+  delay(1000);
+   
+  sensor=analogRead(humedad);
+  sensor=(sensor/1023)*100;
+  lcd.setCursor(0,1);
+  lcd.print(sensor,1);
+  lcd.setCursor(2,1);
+  lcd.print("% hum");
+  delay(1000);
+  lcd.clear();
+  if
+   (sensor<28)
+   {
+    lcd.print("humedad baja");
+    delay(1000);
+    lcd.clear();
+    lcd.print("riego encendido");
+    digitalWrite(riego,HIGH);
+    delay(1000);
+    lcd.clear();
+    }
+   if
+   (sensor>31)
+   {
+    lcd.print("humedad alta");
+    delay(1000);
+    lcd.clear();
+    lcd.print("riego apagado");
+    digitalWrite(riego,LOW);
+    delay(1000);
+    lcd.clear();
+    }
+    if
+    (sensor>29 && sensor<31)
+    {
+      lcd.print("humedad optima");
+ delay(1000);
+    lcd.clear();
+    lcd.print("riego apagado");
+      digitalWrite(riego,LOW);
+      delay(1000);
+      lcd.clear();
+      }
+}
+    
+
+  

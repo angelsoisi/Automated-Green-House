@@ -1,0 +1,9 @@
+﻿Nombre,Cantidad,Componente
+"U1",1," Arduino Uno R3"
+"U2",1," LCD 16 x 2"
+"Rpot2, Rpot1",2,"250 kΩ Potenciómetro"
+"U3",1," Sensor de temperatura [TMP36]"
+"R1, R2",2,"1 kΩ Resistencia"
+"M1",1," Motor de CC"
+"L1",1," Bombilla"
+"D1",1,"Rojo LED"
